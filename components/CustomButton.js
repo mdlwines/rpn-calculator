@@ -32,7 +32,7 @@ const getStyles = (variant, color, size) => {
   const sizes = {
     sm: { padding: 8, width: 35, height: 35, fontSize: 14 },
     md: { padding: 12, width: 60, height: 50, fontSize: 16 },
-    lg: { padding: 12, width: 130, height: 50, fontSize: 16 },
+    lg: { padding: 12, width: 110, height: 50, fontSize: 16 },
   };
 
   const { padding, width, height, fontSize } = sizes[size] || sizes.md;

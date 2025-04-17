@@ -223,6 +223,13 @@ export default function App() {
           }
           setClearOnPress(true);
           break;
+
+        case 'CLΣ':
+          var working = stack;
+          ResetRegisters();
+          setResult("n=" + registers.n + " Σx=" + registers.Ex + " Σx²=" + registers.Ex2);
+          setClearOnPress(true);
+          break;
         default:
           setResult(value + " not implemented")
           setClearOnPress(true);
@@ -236,7 +243,6 @@ export default function App() {
 //    e.preventDefault();
     setResult('');
     setStack([]);
-    ResetRegisters();
   };
 
   return (
@@ -276,8 +282,8 @@ const styles = StyleSheet.create({
     flex: 0.2,
     paddingTop: 10,
     backgroundColor: '#fff',
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
     justifyContent: 'flex-end', // Attach to the bottom
   },
   stackHeader: {
