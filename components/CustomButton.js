@@ -21,7 +21,8 @@ export default CustomButton;
 
 const colorMap = {
   primary: '#6200ee',
-  secondary: '#03dac6',
+  secondary: '#696969',
+  action: '#ffd700',
   danger: '#b00020',
 };
 
@@ -30,8 +31,8 @@ const getStyles = (variant, color, size) => {
 
   const sizes = {
     sm: { padding: 8, width: 35, height: 35, fontSize: 14 },
-    md: { padding: 12, width: 50, height: 50, fontSize: 16 },
-    lg: { padding: 12, width: 100, height: 50, fontSize: 16 },
+    md: { padding: 12, width: 60, height: 50, fontSize: 16 },
+    lg: { padding: 12, width: 130, height: 50, fontSize: 16 },
   };
 
   const { padding, width, height, fontSize } = sizes[size] || sizes.md;

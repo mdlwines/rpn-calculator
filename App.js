@@ -8,8 +8,22 @@ import StackItems from './components/StackItems';
 export default function App() {
   const inputRef = useRef(null);
   const [result, setResult] = useState('');
+  const [altKeyPad, setAltKeyPad] = useState(false);
   const [stack, setStack] = useState([]);
+  const [registers, setRegisters] = useState({
+    Ex: 0,
+    Ex2: 0,
+    n: 0
+  });
   const [clearOnPress, setClearOnPress] = useState(false);
+
+  function ResetRegisters() {
+    setRegisters({
+      Ex: 0,
+      Ex2: 0,
+      n: 0
+    });
+  }
 
   useEffect(() => {
     if (stack.length > 0) {
@@ -32,11 +46,23 @@ export default function App() {
     } else {
       // check if value is an operator, if so, call the corresponding function
       switch (value) {
+        case 'AltKeyPad':
+          setAltKeyPad(!altKeyPad);
+          break;
+        case '.':
+          // check if there is already a decimal point in the result
+          if (result.indexOf('.') === -1) {
+            setResult(result + value);
+          }
+          setClearOnPress(false);
+          break;
         case 'ENTER ↑':
           // push the number on the stack
-          setStack([...stack, result]);
-          setResult('');
-          setClearOnPress(true);
+          if (result.length > 0) {
+            setStack([...stack, result]);
+            setResult('');
+            setClearOnPress(true);
+          }
           break;
         case '+':
           var working = stack;
@@ -92,7 +118,9 @@ export default function App() {
           break;
         case '←':
           console.log('Back space');
-          setResult(result.slice(0, -1));
+          if (result.length > 0) {
+            setResult(result.slice(0, -1));
+          }
           break;
         case 'R/S':
           resetResult();
@@ -114,7 +142,90 @@ export default function App() {
           setStack(working);
           setClearOnPress(true);
           break;
+        case 'Σ+':
+          var working = stack;
+          // need to implicitly push the input value to the stack 
+          if (result !== '' && clearOnPress === false) {
+            working = [...working, result];
+          }
+          if (working.length > 0) {
+            var x = Number(working.pop());
+            var registersWorking = registers;
+            registersWorking.n += 1;
+            registersWorking.Ex += x;
+            registersWorking.Ex2 += (x * x);
+            setRegisters(registersWorking);
+            setResult("n=" + registersWorking.n + " Σx=" + registersWorking.Ex + " Σx²=" + registersWorking.Ex2);
+            setStack(working);
+          }
+          setClearOnPress(true);
+          break;
+        case 'TAN':
+          var working = stack;
+          // need to implicitly push the input value to the stack 
+          if (result !== '' && clearOnPress === false) {
+            working = [...working, result];
+          }
+          var resultVal = Math.tan(Number(working.pop()));
+          setResult(resultVal);
+          working.push(resultVal);
+          setStack(working);
+          setClearOnPress(true);
+          break;
+        case 'COS':
+          var working = stack;
+          // need to implicitly push the input value to the stack 
+          if (result !== '' && clearOnPress === false) {
+            working = [...working, result];
+          }
+          var resultVal = Math.cos(Number(working.pop()));
+          setResult(resultVal);
+          working.push(resultVal);
+          setStack(working);
+          setClearOnPress(true);
+          break;
+        case 'SIN':
+          var working = stack;
+          // need to implicitly push the input value to the stack 
+          if (result !== '' && clearOnPress === false) {
+            working = [...working, result];
+          }
+          var resultVal = Math.sin(Number(working.pop()));
+          setResult(resultVal);
+          working.push(resultVal);
+          setStack(working);
+          setClearOnPress(true);
+          break;
+        case 'SWAP':
+          var working = stack;
+          // need to implicitly push the input value to the stack 
+          if (result !== '' && clearOnPress === false) {
+            working = [...working, result];
+          }
+          if (working.length > 1) {
+            var num1 = Number(working.pop());
+            var num2 = Number(working.pop());
+            setStack([num1, num2, ...working]);
+            setResult('');
+          }
+          setClearOnPress(true);
+          break;
+        case 'R↓':
+          var working = stack;
+          console.log("R - Stack: " + working);
+          if (working.length > 1) {
+            const top = working[0];
+            console.log("Top: " + top);
+            const [last, ...rest] = working;
+            working = [...rest, last];
+            setResult(top);
+            setStack([...working]);
+          }
+          setClearOnPress(true);
+          break;
         default:
+          setResult(value + " not implemented")
+          setClearOnPress(true);
           break;
       }
     }
@@ -125,6 +236,7 @@ export default function App() {
 //    e.preventDefault();
     setResult('');
     setStack([]);
+    ResetRegisters();
   };
 
   return (
@@ -136,7 +248,7 @@ export default function App() {
         <Text style={styles.displayText}>{result}</Text>
       </View>
       <View style={styles.keypad}>
-        <KeyPad onPress={ButtonPress} />
+        <KeyPad isAltKeypad={altKeyPad} onPress={ButtonPress} />
       </View>
       <View style={styles.stackHeader}>
         <Text style={{ fontSize: 20, textAlign: 'center' }}>Stack</Text>
@@ -154,15 +266,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   keypad: {
-    flex: 0.6,
+    flex: 0.80,
     paddingTop: 20,
     backgroundColor: '#fff',
-    paddingLeft: 60,
+    paddingLeft: 20,
     paddingRight: 20,
   },
   stack: {
     flex: 0.2,
-    paddingTop: 20,
+    paddingTop: 10,
     backgroundColor: '#fff',
     paddingLeft: 20,
     paddingRight: 20,
