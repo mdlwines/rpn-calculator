@@ -29,9 +29,10 @@ const colorMap = {
 const getStyles = (variant, color, size) => {
   const baseColor = colorMap[color] || colorMap.primary;
 
+  //Note: padding is not used right now
   const sizes = {
     sm: { padding: 8, width: 35, height: 35, fontSize: 14 },
-    md: { padding: 12, width: 60, height: 50, fontSize: 16 },
+    md: { padding: 5, width: 55, height: 50, fontSize: 16 },
     lg: { padding: 12, width: 110, height: 50, fontSize: 16 },
   };
 

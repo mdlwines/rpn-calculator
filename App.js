@@ -275,8 +275,8 @@ const styles = StyleSheet.create({
     flex: 0.80,
     paddingTop: 20,
     backgroundColor: '#fff',
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingLeft: 2,
+    paddingRight: 2,
   },
   stack: {
     flex: 0.2,
