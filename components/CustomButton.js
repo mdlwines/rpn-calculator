@@ -31,7 +31,7 @@ const getStyles = (variant, color, size) => {
 
   //Note: padding is not used right now
   const sizes = {
-    sm: { padding: 8, width: 35, height: 35, fontSize: 14 },
+    sm: { padding: 8, width: 80, height: 20, fontSize: 10 },
     md: { padding: 5, width: 55, height: 50, fontSize: 16 },
     lg: { padding: 12, width: 110, height: 50, fontSize: 16 },
   };

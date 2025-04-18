@@ -2,11 +2,16 @@ import { StyleSheet, Text, View, Button} from 'react-native';
 import React from 'react'
 import CustomButton from './CustomButton';
 
-function Keypad({ onPress, isAltKeypad }) {
-    if (!isAltKeypad) {
-        return PrimaryKeypad({ onPress });
-    } else {
-        return AltKeypad({ onPress });
+function Keypad({ onPress, keypad = 'primary' }) {
+    switch (keypad) {
+        case 'alpha':
+            return AlphaKeypad({ onPress });
+        case 'primary':
+            return PrimaryKeypad({ onPress });
+        case 'alt':
+            return AltKeypad({ onPress });
+        default:
+            return PrimaryKeypad({ onPress });
     }
 }
 
@@ -70,6 +75,71 @@ function PrimaryKeypad({ onPress }){
             <CustomButton onPress={() => onPress('0')}>  0  </CustomButton>
             <CustomButton onPress={() => onPress('.')}>  .  </CustomButton>
             <CustomButton onPress={() => onPress('R/S')}> R/S </CustomButton>
+            </View>
+        </View>
+    )
+}
+
+function AlphaKeypad({ onPress }){
+    return (
+        <View style={[styles.container]}>
+            <View style={styles.row}>
+            <CustomButton color="alpha" onPress={() => onPress('A')}>A</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('B')}>B</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('C')}>C</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('D')}>D</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('E')}>E</CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton color="alpha" onPress={() => onPress('F')}>F</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('G')}>G</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('H')}>H</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('I')}>I</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('J')}>J</CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton color="action" onPress={() => onPress('N/A')}></CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('K')}>K</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('L')}>L</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('M')}>M</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('N/A')}></CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton size="lg" color="alpha" onPress={() => onPress('N')}>N</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('O')}>O</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('P')}>P</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('N/A')}></CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton color="alpha" onPress={() => onPress('Q')}>Q</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('R')}>R</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('S')}>S</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('T')}>T</CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton color="alpha" onPress={() => onPress('U')}>U</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('V')}>V</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('W')}>W</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('X')}>X</CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton color="alpha" onPress={() => onPress('Y')}>Y</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('Z')}>Z</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('=')}>=</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('?')}>?</CustomButton>
+            </View>
+
+            <View style={styles.row}>
+            <CustomButton color="alpha" onPress={() => onPress(':')}>:</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('SPACE')}>SPACE</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress(',')}>,</CustomButton>
+            <CustomButton color="alpha" onPress={() => onPress('N/A')}></CustomButton>
             </View>
         </View>
     )

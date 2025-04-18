@@ -14,7 +14,6 @@ const StackItems = ({stack}) => {
     const renderItem = ({ item }) => <Item name={item.name} />;
     const listRef = useRef(null);
     let offsetVal = stackArray.length === 0 ? 1 : stackArray.length - 1;
-    console.log("Offset value: " + offsetVal);
 
     useEffect(() => {
         if (listRef.current && stackArray.length > 0) {
